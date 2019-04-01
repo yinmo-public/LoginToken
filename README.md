@@ -12,7 +12,7 @@ Don't forget to put token desktopwin in token.json
 And your mid in creator =["your mid here"]
 ```
 
-## Update 03/01/2019
+## Update 04/01/2019
 ```
 * Debug 
 * Improve Logic
