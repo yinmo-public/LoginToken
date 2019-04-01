@@ -10,11 +10,7 @@ import json, requests, LineService
 
 with open('token.json', 'r') as fp:
     aun = json.load(fp)
-    
-def restart_program():
-    python = sys.executable
-    os.execl(python, python, * sys.argv)
-    
+
 token = TOKEN.LINE()
 if aun['token1'] == "":
     token.login(qr=True)
@@ -79,7 +75,6 @@ wait = {
     'autoAdd':True,
     'autoJoin':True,
     'message':"感謝你加我好友，現在你可以邀請我到群組 ☆",
-    "lang":"JP",
     }
     
 def restart_program():
@@ -103,7 +98,7 @@ def bot(op):
         if op.type == 13:
             group = token.getGroup(op.param1)
             inviter = token.getContact(op.param2)
-            print ("[ 13 ] 通知邀請群組: " + str(group.name) + "\n邀請者: " + inviter.displayName)
+            print ("[ 13 ] 通知邀請群組: " + str(group.name) + " → 邀請者: " + inviter.displayName)
             if mid in op.param3:
               if wait["autoJoin"] == True:
                 token.acceptGroupInvitation(op.param1)
@@ -117,8 +112,7 @@ def bot(op):
         if (op.type == 25 or op.type == 26) and op.message.contentType == 0:
             msg = op.message
             if msg.text in ["help","Help","key","@help","menu","指令"]:
-              if wait["lang"] == "JP":
-                  token.sendText(msg.to,helpMessage)
+              token.sendText(msg.to,helpMessage)       
 ############# REBOOT ##########################
             elif msg.text.lower().startswith("restart"):
              if msg.from_ in creator:
@@ -265,7 +259,6 @@ def bot(op):
 ############## BYE BOT ###################
             elif msg.text.lower().startswith("@bye"):
               if msg.toType == 2:
-                  ginfo = token.getGroup(msg.to)
                   try:
                       token.sendText(msg.to,"Bye Bye")
                       token.leaveGroup(msg.to)
